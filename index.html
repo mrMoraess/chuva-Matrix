@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <script>
+        //elemento canvas
+        const c = document.getElementById('matrix')
+        //contexto da canvas
+        const ctx = c.getContext("2d")
+
+        // fillRect(eixoX, eixoY, largura e altura)
+        ctx.fillRect(0, 0, c.width, c.height)
+        c.height = window.innerHeight
+        c.width = window.innerWidth
+
+        ctx.font = `60px arial`
+        // ctx.fillText("Matrix Rain", 0, 60)
+        ctx.fillStyle = "#0f0"
+        ctx.font = `60px arial`
+        // ctx.fillText("Matrix Rain", 0, 60)
+
+        //simbolos do matrix
+        const letters = ["日","ﾊ","ﾐ","ﾋ","ｰ","ｳ","ｼ","ﾅ","ﾓ","ﾆ","ｻ","ﾜ","ﾂ","ｵ","ﾘ","ｱ","ﾎ","ﾃ","ﾏ","ｹ","ﾒ","ｴ","ｶ","ｷ","ﾑ","ﾕ","ﾗ","ｾ","ﾈ","ｽ","ﾀ","ﾇ","ﾍ",":","・",".","=","*","+","-","<",">","¦","｜","ﾘ"];
+        const fontSize = 18
+        const columns = c.width / fontSize
+        const drops = new Array(Math.floor(columns)).fill(1)
+
+        function Draw () {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"
+            ctx.fillRect(0, 0, c.width, c.height)
+
+            ctx.fillStyle = "#0f0"
+            ctx.font = `${fontSize}px arial`
+            
+            for(let i = 0; i < drops.length; i++) {
+                if ( drops[i] * fontSize > c.height && Math.random() > 0.99) {
+                    drops[i] = 0
+                }
+                const text = letters[Math.floor(Math.random() * letters.length)]
+
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize)
+
+                drops[i]++
+            }
+
+            window.requestAnimationFrame(Draw)
+        }
+        Draw()
+    </script>
+</body>
+</html>
